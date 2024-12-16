@@ -4,7 +4,7 @@ const scrapeController = require('../scrapers/scrapeController');
 
 // Route pour la page principale
 router.get('/', (req, res) => {
-  res.render('index', { title: 'Accueil', data: null });
+  res.render('index', { title: 'OrbitWatch', data: null });
 });
 
 // Exemple d'API pour récupérer des données via scraping

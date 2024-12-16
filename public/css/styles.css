@@ -1,17 +1,61 @@
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
+    font-family: 'Orbitron', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #0A1F3F;
-}
-
-h1 {
-    text-align: center;
-    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 ul {
     list-style: none;
     padding: 0;
+}
+
+.header {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #FFF;
+    width: 94%;
+    height: auto;
+    margin-top: 1%;
+    border-end-start-radius: 1.3vw;
+    border-start-end-radius: 1.3vw;
+    padding-left: 2%;
+    padding-top: 0.02px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    align-items: center;
+}
+
+.mainBody {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    text-align: center;
+    height: 100vh;
+    width: 96%;
+    margin-top: 1%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-end-end-radius: 1.3vw;
+    border-start-start-radius: 1.3vw;
+}
+
+.mainBodyHeader {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #FFF;
+    width: 98%;
+    padding-left: 2%;
+    padding-top: 0.02px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    align-items: center;
+    height: 7vh;
+    border-end-end-radius: 1.3vw;
+    border-start-start-radius: 1.3vw;
+    margin-top: 0;
+    gap: 5vw;
 }

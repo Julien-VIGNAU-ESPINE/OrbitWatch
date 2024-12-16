@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <title>
         <%= title %>
     </title>
@@ -11,7 +12,7 @@
 </head>
 
 <body>
-    <h1>
+    <!-- <h1>
         <%= title %>
     </h1>
     <% if (data) { %>
@@ -24,7 +25,19 @@
         </ul>
         <% } else { %>
             <p>Aucune donnée à afficher.</p>
-            <% } %>
+            <% } %> -->
+    <div class="header">
+        <h1>
+            <%= title %>
+        </h1>
+    </div>
+    <div class="mainBody">
+        <div class="mainBodyHeader">
+            <p>Sort by - Date</p>
+            <p>Compagnies - All</p>
+            <p>Country - USA</p>
+        </div>
+    </div>
 </body>
 
 </html>
