@@ -1,0 +1,32 @@
+{
+  "name": "orbitwatch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Julien-VIGNAU-ESPINE/OrbitWatch.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Julien-VIGNAU-ESPINE/OrbitWatch/issues"
+  },
+  "homepage": "https://github.com/Julien-VIGNAU-ESPINE/OrbitWatch#readme",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "cheerio": "^1.0.0",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "puppeteer": "^23.10.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
