@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exécution Code Python</title>
+    <style>
+        /* Style pour les boutons et le résultat */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #header {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Style pour les listes */
+        ul {
+            list-style-type: none;
+            /* Pour enlever les puces */
+            padding: 0;
+        }
+
+        li {
+            padding: 8px;
+            margin-bottom: 5px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        li:hover {
+            background-color: #f1f1f1;
+        }
+
+        pre {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            max-width: 100%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header">
+        <button id="executerBtn1">Exécuter index.py</button>
+        <button id="executerBtn2">Exécuter index2.py</button>
+    </div>
+
+    <p id="result1"></p>
+    <ul id="jsonResult1"></ul> <!-- Résultats sous forme de liste -->
+
+    <p id="result2"></p>
+    <ul id="jsonResult2"></ul> <!-- Résultats sous forme de liste -->
+
+    <script>
+        // Bouton pour exécuter index.py
+        document.getElementById('executerBtn1').addEventListener('click', function () {
+            // Masquer les résultats du deuxième bouton
+            document.getElementById('result2').innerText = "";
+            document.getElementById('jsonResult2').innerHTML = ""; // Réinitialiser le contenu
+
+            fetch('/executer_code_1', {
+                method: 'POST'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Affichage du message de succès pour index.py
+                    document.getElementById('result1').innerText = data.message;
+
+                    // Affichage du contenu du fichier launch_data1.json sous forme de liste
+                    const jsonResult1 = document.getElementById('jsonResult1');
+                    jsonResult1.innerHTML = ''; // Clear previous data
+                    data.launch_data.forEach(item => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<strong>Company :</strong> ${item.company} <br> <strong>Nom :</strong> ${item.name} <br> <strong>Date :</strong> ${item.date} <br> <strong>Heure :</strong> ${item.hour}`;
+                        jsonResult1.appendChild(li);
+                    });
+                });
+        });
+
+        // Bouton pour exécuter index2.py
+        document.getElementById('executerBtn2').addEventListener('click', function () {
+            // Masquer les résultats du premier bouton
+            document.getElementById('result1').innerText = "";
+            document.getElementById('jsonResult1').innerHTML = ""; // Réinitialiser le contenu
+
+            fetch('/executer_code_2', {
+                method: 'POST'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Affichage du message de succès pour index2.py
+                    document.getElementById('result2').innerText = data.message;
+
+                    // Affichage du contenu du fichier launch_data2.json sous forme de liste
+                    const jsonResult2 = document.getElementById('jsonResult2');
+                    jsonResult2.innerHTML = ''; // Clear previous data
+                    data.launch_data.forEach(item => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<strong>Company :</strong> ${item.company} <br> <strong>Name :</strong> ${item.name} <br> <strong>Date :</strong> ${item.date} <br> <strong>Hour :</strong> ${item.hour || 'N/A'}`;
+                        jsonResult2.appendChild(li);
+                    });
+                });
+        });
+    </script>
+</body>
+
+</html>
