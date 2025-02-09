@@ -34,7 +34,6 @@
             margin: 1%;
         }
 
-
         button {
             padding: 10px 20px;
             font-size: 16px;
@@ -50,16 +49,48 @@
             background-color: #45a049;
         }
 
-        /* Style pour les listes */
+        /* Style pour les boutons de défilement */
+        .scroll-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .scroll-buttons button {
+            font-size: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .scroll-buttons button:hover {
+            background-color: #45a049;
+        }
+
+        /* Style pour les listes horizontales */
         ul {
             list-style-type: none;
             /* Pour enlever les puces */
             padding: 0;
+            display: flex;
+            /* Disposition horizontale */
+            white-space: nowrap;
+            /* Évite le retour à la ligne des éléments */
+            width: 100%;
+            /* Assure que la liste occupe toute la largeur */
+            margin-bottom: 20px;
+            overflow: hidden;
+            /* Cache les éléments qui dépassent */
+            scroll-behavior: smooth;
+            /* Défilement fluide */
         }
 
         li {
-            padding: 8px;
-            margin-bottom: 5px;
+            padding: 8px 20px;
+            margin-right: 10px;
             background-color: #000;
             border: 1px solid #ddd;
             border-radius: 5px;
@@ -89,14 +120,29 @@
         <button id="executerBtn1">Exécuter index.py</button>
         <button id="executerBtn2">Exécuter index2.py</button>
         <p id="result1"></p>
-        <ul id="jsonResult1"></ul> <!-- Résultats sous forme de liste -->
-    
+
+        <!-- Boutons de défilement -->
+        <div class="scroll-buttons">
+            <button id="prevBtn" onclick="scrollList(-1)">&#60;</button>
+            <button id="nextBtn" onclick="scrollList(1)">&#62;</button>
+        </div>
+
+        <ul id="jsonResult1"></ul> <!-- Résultats sous forme de liste horizontale -->
+
         <p id="result2"></p>
-        <ul id="jsonResult2"></ul> <!-- Résultats sous forme de liste -->
+        <ul id="jsonResult2"></ul> <!-- Résultats sous forme de liste horizontale -->
     </div>
-    
 
     <script>
+        let currentList = 'jsonResult1'; // Initialement la première liste
+
+        // Fonction pour faire défiler la liste horizontalement
+        function scrollList(direction) {
+            const jsonResult = document.getElementById(currentList);
+            const scrollAmount = 300; // Défile de 300px à chaque clic
+            jsonResult.scrollLeft += direction * scrollAmount;
+        }
+
         // Bouton pour exécuter index.py
         document.getElementById('executerBtn1').addEventListener('click', function () {
             // Masquer les résultats du deuxième bouton
@@ -111,7 +157,7 @@
                     // Affichage du message de succès pour index.py
                     document.getElementById('result1').innerText = data.message;
 
-                    // Affichage du contenu du fichier launch_data1.json sous forme de liste
+                    // Affichage du contenu du fichier launch_data1.json sous forme de liste horizontale
                     const jsonResult1 = document.getElementById('jsonResult1');
                     jsonResult1.innerHTML = ''; // Clear previous data
                     data.launch_data.forEach(item => {
@@ -119,6 +165,9 @@
                         li.innerHTML = `<strong>Company :</strong> ${item.company} <br> <strong>Nom :</strong> ${item.name} <br> <strong>Date :</strong> ${item.date} <br> <strong>Heure :</strong> ${item.hour}`;
                         jsonResult1.appendChild(li);
                     });
+
+                    // On met à jour la liste active
+                    currentList = 'jsonResult1';
                 });
         });
 
@@ -136,7 +185,7 @@
                     // Affichage du message de succès pour index2.py
                     document.getElementById('result2').innerText = data.message;
 
-                    // Affichage du contenu du fichier launch_data2.json sous forme de liste
+                    // Affichage du contenu du fichier launch_data2.json sous forme de liste horizontale
                     const jsonResult2 = document.getElementById('jsonResult2');
                     jsonResult2.innerHTML = ''; // Clear previous data
                     data.launch_data.forEach(item => {
@@ -144,6 +193,9 @@
                         li.innerHTML = `<strong>Company :</strong> ${item.company} <br> <strong>Name :</strong> ${item.name} <br> <strong>Date :</strong> ${item.date} <br> <strong>Hour :</strong> ${item.hour || 'N/A'}`;
                         jsonResult2.appendChild(li);
                     });
+
+                    // On met à jour la liste active
+                    currentList = 'jsonResult2';
                 });
         });
     </script>
