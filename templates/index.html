@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <title>Orbitwatch</title>
     <style>
-        /* Style pour les boutons et le résultat */
         body {
             font-family: 'Orbitron', sans-serif;
             margin: 0;
@@ -38,7 +37,17 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
         }
 
-        button {
+        .main_body_header {
+            background-color: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            padding: 0.8vw;
+            gap: 2vw;
+            border-top-left-radius: 2vw;
+            border-bottom-right-radius: 2vw;
+        }
+
+        .main_body_header button {
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
@@ -46,14 +55,44 @@
             color: white;
             border: none;
             border-radius: 5px;
-            margin: 5px;
         }
 
-        button:hover {
+        .main_body_header button:hover {
             background-color: #45a049;
         }
 
-        /* Style pour les boutons de défilement */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            white-space: nowrap;
+            width: 100%;
+            margin-bottom: 20px;
+            overflow: hidden;
+            scroll-behavior: smooth;
+            gap: 3vw;
+        }
+
+        li {
+            padding: 8px 20px;
+            margin-right: 10px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            height: 15vw;
+            width: 10vw; /* Largeur définie */
+            text-wrap: wrap;
+            font-size: 0.7vw;
+            flex-shrink: 0; /* Empêche la boîte de se réduire */
+            border-top-left-radius: 2vw;
+            border-bottom-right-radius: 2vw;
+        }
+
+
+        li:hover {
+            background-color: #222;
+        }
+
         .scroll-buttons {
             display: flex;
             justify-content: center;
@@ -74,54 +113,9 @@
             background-color: #45a049;
         }
 
-        /* Style pour les listes horizontales */
-        ul {
-            list-style-type: none;
-            /* Pour enlever les puces */
-            padding: 0;
+        .launch_list {
             display: flex;
-            /* Disposition horizontale */
-            white-space: nowrap;
-            /* Évite le retour à la ligne des éléments */
-            width: 100%;
-            /* Assure que la liste occupe toute la largeur */
-            margin-bottom: 20px;
-            overflow: hidden;
-            /* Cache les éléments qui dépassent */
-            scroll-behavior: smooth;
-            /* Défilement fluide */
         }
-
-        li {
-            padding: 8px 20px;
-            margin-right: 10px;
-            background-color: #000;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        li:hover {
-            background-color: #222;
-        }
-
-        pre {
-            background-color: #f9f9f9;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            max-width: 100%;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        .main_body_header {
-            background-color: rgba(0, 0, 0, 0.3);
-            display: flex;
-            padding: 0.8vw;
-            gap: 3vw;
-            border-top-left-radius: 2vw;
-            border-bottom-right-radius: 2vw;
-1        }
     </style>
 </head>
 
@@ -134,91 +128,59 @@
             <p>Sort by - Date</p>
             <p>Company - All</p>
             <p>Country - USA</p>
+            <button id="executerBtn1">Server 1</button>
+            <button id="executerBtn2">Server 2</button>
         </div>
-        <button id="executerBtn1">Exécuter index.py</button>
-        <button id="executerBtn2">Exécuter index2.py</button>
-        <p id="result1"></p>
-
-        <!-- Boutons de défilement -->
+        <p id="result"></p>
+        <div class="launch_list">
         <div class="scroll-buttons">
             <button id="prevBtn" onclick="scrollList(-1)">&#60;</button>
-            <button id="nextBtn" onclick="scrollList(1)">&#62;</button>
         </div>
-
-        <ul id="jsonResult1"></ul> <!-- Résultats sous forme de liste horizontale -->
-
-        <p id="result2"></p>
-        <ul id="jsonResult2"></ul> <!-- Résultats sous forme de liste horizontale -->
+        <ul id="jsonResult"></ul>
+        <div class="scroll-buttons">
+            <button id="nextBtn" onclick="scrollList(+1)">&#62;</button>
+        </div>
+        </div>
     </div>
-
     <script>
-        let currentList = 'jsonResult1'; // Initialement la première liste
+        let currentList = 'jsonResult';
 
-        // Fonction pour faire défiler la liste horizontalement
         function scrollList(direction) {
             const jsonResult = document.getElementById(currentList);
-            const scrollAmount = 300; // Défile de 300px à chaque clic
+            const scrollAmount = 300;
             jsonResult.scrollLeft += direction * scrollAmount;
         }
 
-        // Bouton pour exécuter index.py
+        function executeServer(server) {
+            let endpoint = server === 1 ? "/executer_code_1" : "/executer_code_2";
+            fetch(endpoint, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerText = data.message;
+                    const jsonResult = document.getElementById('jsonResult');
+                    jsonResult.innerHTML = '';
+                    data.launch_data.forEach(item => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<strong>Company :</strong><br> ${item.company} <br><br>
+                                        <strong>Name :</strong><br> ${item.name} <br><br>
+                                        <strong>Date :</strong><br> ${item.date} <br><br>
+                                        <strong>Hour :</strong><br> ${item.hour || 'N/A'}`;
+                        jsonResult.appendChild(li);
+                    });
+                });
+        }
+
         document.getElementById('executerBtn1').addEventListener('click', function () {
-            // Masquer les résultats du deuxième bouton
-            document.getElementById('result2').innerText = "";
-            document.getElementById('jsonResult2').innerHTML = ""; // Réinitialiser le contenu
-
-            fetch('/executer_code_1', {
-                method: 'POST'
-            })
-                .then(response => response.json())
-                .then(data => {
-                    // Affichage du message de succès pour index.py
-                    document.getElementById('result1').innerText = data.message;
-
-                    // Affichage du contenu du fichier launch_data1.json sous forme de liste horizontale
-                    const jsonResult1 = document.getElementById('jsonResult1');
-                    jsonResult1.innerHTML = ''; // Clear previous data
-                    data.launch_data.forEach(item => {
-                        const li = document.createElement('li');
-                        li.innerHTML = `<strong>Company :</strong> ${item.company} <br> <strong>Nom :</strong> ${item.name} <br> <strong>Date :</strong> ${item.date} <br> <strong>Heure :</strong> ${item.hour}`;
-                        jsonResult1.appendChild(li);
-                    });
-
-                    // On met à jour la liste active
-                    currentList = 'jsonResult1';
-                });
+            executeServer(1);
         });
 
-        // Bouton pour exécuter index2.py
         document.getElementById('executerBtn2').addEventListener('click', function () {
-            // Masquer les résultats du premier bouton
-            document.getElementById('result1').innerText = "";
-            document.getElementById('jsonResult1').innerHTML = ""; // Réinitialiser le contenu
-
-            fetch('/executer_code_2', {
-                method: 'POST'
-            })
-                .then(response => response.json())
-                .then(data => {
-                    // Affichage du message de succès pour index2.py
-                    document.getElementById('result2').innerText = data.message;
-
-                    // Affichage du contenu du fichier launch_data2.json sous forme de liste horizontale
-                    const jsonResult2 = document.getElementById('jsonResult2');
-                    jsonResult2.innerHTML = ''; // Clear previous data
-                    data.launch_data.forEach(item => {
-                        const li = document.createElement('li');
-                        li.innerHTML = `<strong>Company :</strong> ${item.company} <br> <strong>Name :</strong> ${item.name} <br> <strong>Date :</strong> ${item.date} <br> <strong>Hour :</strong> ${item.hour || 'N/A'}`;
-                        jsonResult2.appendChild(li);
-                    });
-
-                    // On met à jour la liste active
-                    currentList = 'jsonResult2';
-                });
+            executeServer(2);
         });
+
         window.onload = function () {
-                document.getElementById('executerBtn1').click();
-            }
+            document.getElementById('executerBtn1').click();
+        }
     </script>
 </body>
 
