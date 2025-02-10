@@ -15,6 +15,18 @@
             color: #FFF;
         }
 
+        body::before {
+            content: "";
+            position: absolute;
+            width: 120vw;
+            height: 120vw;
+            background-color: #3A0851;
+            border-radius: 50%;
+            top: 12vw;
+            left: -50vw;
+            z-index: -1;
+        }
+
         #header {
             background-color: rgba(0, 0, 0, 0.4);
             padding: 0.1%;
