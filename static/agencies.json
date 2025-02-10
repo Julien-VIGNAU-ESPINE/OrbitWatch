@@ -1,0 +1,14 @@
+[
+    {
+        "name": "SpaceX",
+        "country": "United States",
+        "website": "https://www.spacex.com/",
+        "logo": "../static/spacex.svg"
+    },
+    {
+        "name": "Blue Origin",
+        "country": "United States",
+        "website": "https://www.blueorigin.com/",
+        "logo": "../static/blueorigin.jpg"
+    }
+]

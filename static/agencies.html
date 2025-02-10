@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Companies Grid</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1000px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card img {
+            max-width: 100px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .card a {
+            display: block;
+            margin-top: 10px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid" id="companiesGrid"></div>
+    <script>
+        fetch('agencies.json')
+            .then(response => response.json())
+            .then(companies => {
+                const grid = document.getElementById("companiesGrid");
+                companies.forEach(company => {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+                        <img src="${company.logo}" alt="${company.name} Logo">
+                        <h3>${company.name}</h3>
+                        <p>Pays: ${company.country}</p>
+                        <a href="${company.website}" target="_blank">Visiter le site</a>
+                    `;
+                    grid.appendChild(card);
+                });
+            })
+            .catch(error => console.error('Erreur de chargement du JSON:', error));
+    </script>
+</body>
+
+</html>
