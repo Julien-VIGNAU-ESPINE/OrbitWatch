@@ -9,18 +9,39 @@
         body {
             font-family: Arial, sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
             background-color: #f4f4f4;
         }
 
+        .filters {
+            margin: 20px;
+        }
+
         .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 20px;
             padding: 20px;
             max-width: 1000px;
+        }
+
+        .country-section {
+            width: 100%;
+        }
+
+        .country-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .company-list {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
         }
 
         .card {
@@ -47,12 +68,62 @@
 </head>
 
 <body>
+    <div class="filters">
+        <label for="sort">Trier par :</label>
+        <select id="sort">
+            <option value="name">Nom (A-Z)</option>
+            <option value="country">Pays</option>
+        </select>
+    </div>
     <div class="grid" id="companiesGrid"></div>
     <script>
+        let companies = [];
+
         fetch('agencies.json')
             .then(response => response.json())
-            .then(companies => {
-                const grid = document.getElementById("companiesGrid");
+            .then(data => {
+                companies = data;
+                renderCompanies();
+            })
+            .catch(error => console.error('Erreur de chargement du JSON:', error));
+
+        function renderCompanies() {
+            const grid = document.getElementById("companiesGrid");
+            grid.innerHTML = "";
+            const sortBy = document.getElementById("sort").value;
+
+            if (sortBy === "country") {
+                companies.sort((a, b) => a.country.localeCompare(b.country));
+                let currentCountry = "";
+
+                companies.forEach(company => {
+                    if (company.country !== currentCountry) {
+                        currentCountry = company.country;
+                        const countrySection = document.createElement("div");
+                        countrySection.className = "country-section";
+                        countrySection.innerHTML = `<div class='country-title'>${currentCountry}</div>`;
+                        const companyList = document.createElement("div");
+                        companyList.className = "company-list";
+                        countrySection.appendChild(companyList);
+                        grid.appendChild(countrySection);
+                    }
+
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+                        <img src="${company.logo}" alt="${company.name} Logo">
+                        <h3>${company.name}</h3>
+                        <p>Pays: ${company.country}</p>
+                        <a href="${company.website}" target="_blank">Visiter le site</a>
+                    `;
+                    grid.lastChild.lastChild.appendChild(card);
+                });
+            } else {
+                companies.sort((a, b) => a.name.localeCompare(b.name));
+                const companyList = document.createElement("div");
+                companyList.className = "company-list";
+                grid.appendChild(companyList);
+
                 companies.forEach(company => {
                     const card = document.createElement("div");
                     card.className = "card";
@@ -62,10 +133,12 @@
                         <p>Pays: ${company.country}</p>
                         <a href="${company.website}" target="_blank">Visiter le site</a>
                     `;
-                    grid.appendChild(card);
+                    companyList.appendChild(card);
                 });
-            })
-            .catch(error => console.error('Erreur de chargement du JSON:', error));
+            }
+        }
+
+        document.getElementById("sort").addEventListener("change", renderCompanies);
     </script>
 </body>
 
