@@ -140,20 +140,27 @@
             justify-content: space-between;
             margin: 2vw;
         }
+        .view_more {
+            display: flex;
+            justify-content: space-between;
+            margin: 2vw;
+            justify-content: center;
+            padding-bottom: 1vw;
+        }
 
         .agency_box {
-            padding: 8px 20px;
             margin-right: 10px;
             background-color: rgba(0, 0, 0, 0.4);
             border: 1px solid #ddd;
             border-radius: 5px;
-            height: 6vw;
+            height: 5vw;
             width: 8vw; 
             text-wrap: wrap;
             font-size: 0.7vw;
             flex-shrink: 0; 
             border-top-left-radius: 2vw;
             border-bottom-right-radius: 2vw;
+            overflow: hidden;
         }
 
         .agency_box:hover {
@@ -170,6 +177,13 @@
             text-decoration: none;
             color: white;
         }
+
+        .agency_logo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* L’image remplit la box mais peut être coupée */
+        }
+
     </style>
 </head>
 
@@ -197,41 +211,49 @@
         </div>
         <div class="separator"></div>
         <div class="agencies_list">
-            <a href="">
+            <a href="https://www.spacex.com" target="_blank">
                 <div class="agency_box">
-                    <p>SpaceX</p>
+                    <img src="../static/spacex.svg" alt="SpaceX logo" class="agency_logo">
                 </div>
             </a>
-            <a href="">
+            <a href="https://www.nasa.gov" target="_blank">
                 <div class="agency_box">
-                    <p>SpaceX</p>
+                    <img src="../static/nasa.jpg" alt="NASA logo" class="agency_logo">
                 </div>
             </a>
-            <a href="">
+            <a href="https://www.arianespace.com/" target="_blank">
                 <div class="agency_box">
-                    <p>SpaceX</p>
+                    <img src="../static/ariane.jpg" alt="Ariane Space logo" class="agency_logo">
                 </div>
             </a>
-            <a href="">
+            <a href="https://www.blueorigin.com" target="_blank">
                 <div class="agency_box">
-                    <p>SpaceX</p>
+                    <img src="../static/blueorigin.jpg" alt="Blue Origin logo" class="agency_logo">
                 </div>
             </a>
-            <a href="">
+            <a href="https://english.spacechina.com" target="_blank">
                 <div class="agency_box">
-                    <p>SpaceX</p>
+                    <img src="../static/casc.jpg" alt="CASC logo" class="agency_logo">
                 </div>
             </a>
-            <a href="">
+            <a href="https://www.isro.gov.in" target="_blank">
                 <div class="agency_box">
-                    <p>SpaceX</p>
+                    <img src="../static/isro.webp" alt="ISRO logo" class="agency_logo">
                 </div>
             </a>
-            <a href="">
+            <a href="https://www.roscosmos.ru" target="_blank">
                 <div class="agency_box">
-                    <p>SpaceX</p>
+                    <img src="../static/roscosmos.png" alt="Roscosmos logo" class="agency_logo">
                 </div>
             </a>
+            <a href="https://www.ulalaunch.com" target="_blank">
+                <div class="agency_box">
+                    <img src="../static/ula.jpeg" alt="ULA logo" class="agency_logo">
+                </div>
+            </a>
+        </div>
+        <div class="view_more">
+            <a href="#header">View all agencies</a>
         </div>
     </div>
     <script>
