@@ -55,6 +55,7 @@
             align-items: center;
             padding: 0.8vw;
             gap: 2vw;
+            padding-left: 2vw;
             border-top-left-radius: 2vw;
             border-bottom-right-radius: 2vw;
         }
@@ -133,6 +134,42 @@
         .launch_list {
             display: flex;
         }
+
+        .agencies_list {
+            display: flex;
+            justify-content: space-between;
+            margin: 2vw;
+        }
+
+        .agency_box {
+            padding: 8px 20px;
+            margin-right: 10px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            height: 6vw;
+            width: 8vw; 
+            text-wrap: wrap;
+            font-size: 0.7vw;
+            flex-shrink: 0; 
+            border-top-left-radius: 2vw;
+            border-bottom-right-radius: 2vw;
+        }
+
+        .agency_box:hover {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .separator {
+            height: 2px; 
+            background-color: #ddd;
+            margin: 2vw; 
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
     </style>
 </head>
 
@@ -157,6 +194,44 @@
         <div class="scroll-buttons">
             <button id="nextBtn" onclick="scrollList(+1)">&#62;</button>
         </div>
+        </div>
+        <div class="separator"></div>
+        <div class="agencies_list">
+            <a href="">
+                <div class="agency_box">
+                    <p>SpaceX</p>
+                </div>
+            </a>
+            <a href="">
+                <div class="agency_box">
+                    <p>SpaceX</p>
+                </div>
+            </a>
+            <a href="">
+                <div class="agency_box">
+                    <p>SpaceX</p>
+                </div>
+            </a>
+            <a href="">
+                <div class="agency_box">
+                    <p>SpaceX</p>
+                </div>
+            </a>
+            <a href="">
+                <div class="agency_box">
+                    <p>SpaceX</p>
+                </div>
+            </a>
+            <a href="">
+                <div class="agency_box">
+                    <p>SpaceX</p>
+                </div>
+            </a>
+            <a href="">
+                <div class="agency_box">
+                    <p>SpaceX</p>
+                </div>
+            </a>
         </div>
     </div>
     <script>
