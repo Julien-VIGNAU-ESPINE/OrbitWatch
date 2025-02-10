@@ -140,6 +140,11 @@
             justify-content: space-between;
             margin: 2vw;
         }
+        .agencies_list2 {
+            display: flex;
+            justify-content: space-between;
+            margin: 2vw;
+        }
         .view_more {
             display: flex;
             justify-content: space-between;
@@ -257,6 +262,16 @@
         </div>
     </div>
     <script>
+        const companyImages = {
+                "SpaceX": "../static/spacex.svg",
+                "NASA": "../static/nasa.jpg",
+                "Arianespace": "../static/ariane.jpg",
+                "Blue Origin": "../static/blueorigin.jpg",
+                "CASC": "../static/casc.jpg",
+                "ISRO": "../static/isro.webp",
+                "Roscosmos": "../static/roscosmos.png",
+                "ULA": "../static/ula.jpeg"
+            };
         let currentList = 'jsonResult';
 
         function scrollList(direction) {
@@ -275,10 +290,21 @@
                     jsonResult.innerHTML = '';
                     data.launch_data.forEach(item => {
                         const li = document.createElement('li');
-                        li.innerHTML = `<strong>Company :</strong><br> ${item.company} <br><br>
-                                        <strong>Name :</strong><br> ${item.name} <br><br>
-                                        <strong>Date :</strong><br> ${item.date} <br><br>
-                                        <strong>Hour :</strong><br> ${item.hour || 'N/A'}`;
+
+                        // Récupérer l'image correspondante à la compagnie
+                        const companyImage = companyImages[item.company] || "../static/default.jpg"; // Default si pas trouvé
+
+                        li.innerHTML = `
+                        <div style="display: inline-flex; align-items: center; gap: 0.5vw; margin-top: 0.3vw;">
+                            <img src="${companyImage}" alt="${item.company} logo" style="width: 3vw; height: 3vw; border-radius: 50%; object-fit: cover; vertical-align: middle;">
+                            <span>${item.company}</span>
+                        </div>
+                        <br><br>
+                        <strong>Name :</strong><br> ${item.name} <br><br>
+                        <strong>Date :</strong><br> ${item.date} <br><br>
+                        <strong>Hour :</strong><br> ${item.hour || 'N/A'}
+
+                        `;
                         jsonResult.appendChild(li);
                     });
                 });
