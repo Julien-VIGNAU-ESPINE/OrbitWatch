@@ -10,5 +10,71 @@
         "country": "United States",
         "website": "https://www.blueorigin.com/",
         "logo": "../static/blueorigin.jpg"
+    },
+    {
+        "name": "Rocket Lab",
+        "country": "New Zealand",
+        "website": "https://www.rocketlab.com/",
+        "logo": "../static/rocketlab.webp"
+    },
+    {
+        "name": "Arianespace",
+        "country": "France",
+        "website": "https://www.arianespace.com/",
+        "logo": "../static/ariane.jpg"
+    },
+    {
+        "name": "NASA",
+        "country": "United States",
+        "website": "https://www.nasa.gov/",
+        "logo": "../static/nasa.jpg"
+    },
+    {
+        "name": "ULA",
+        "country": "United States",
+        "website": "https://www.ulalaunch.com/",
+        "logo": "../static/ula.jpeg"
+    },
+    {
+        "name": "ISRO",
+        "country": "India",
+        "website": "https://www.isro.gov.in/",
+        "logo": "../static/isro.webp"
+    },
+    {
+        "name": "CASC",
+        "country": "China",
+        "website": "https://www.casc.gov.cn/",
+        "logo": "../static/casc.jpg"
+    },
+    {
+        "name": "Roscosmos",
+        "country": "Russia",
+        "website": "https://www.roscosmos.ru/",
+        "logo": "../static/roscosmos.png"
+    },
+    {
+        "name": "Gilmour",
+        "country": "United Kingdom",
+        "website": "https://www.gilmour.com/",
+        "logo": "../static/gilmour.png"
+    },
+    {
+        "name": "Orbital Science",
+        "country": "United States",
+        "website": "https://www.orbitalscience.com/",
+        "logo": "../static/orbital.png"
+    },
+    {
+        "name": "Galactic Energy",
+        "country": "United States",
+        "website": "https://www.galacticenergy.com/",
+        "logo": "../static/galacticenergy.png"
+    },
+    {
+        "name": "Firefly",
+        "country": "United States",
+        "website": "https://www.firefly.com/",
+        "logo": "../static/firefly.webp"
     }
 ]
