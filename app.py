@@ -21,7 +21,7 @@ def executer_code_1():
         with open('launch_data1.json', 'r') as json_file:
             launch_data = json.load(json_file)
 
-        return jsonify({'message': 'Code index.py exécuté avec succès.', 'launch_data': launch_data})
+        return jsonify({'message': '', 'launch_data': launch_data})
 
     except Exception as e:
         return jsonify({'message': f"Erreur lors de l'exécution : {str(e)}"})
@@ -38,7 +38,7 @@ def executer_code_2():
         with open('launch_data2.json', 'r') as json_file:
             launch_data = json.load(json_file)
 
-        return jsonify({'message': 'Code index2.py exécuté avec succès.', 'launch_data': launch_data})
+        return jsonify({'message': '', 'launch_data': launch_data})
 
     except Exception as e:
         return jsonify({'message': f"Erreur lors de l'exécution : {str(e)}"})
