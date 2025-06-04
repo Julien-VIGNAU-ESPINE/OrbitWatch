@@ -4,214 +4,642 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;500;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <title>Orbitwatch</title>
     <style>
-        body {
-            font-family: 'Orbitron', sans-serif;
+        * {
             margin: 0;
-            padding: 20px;
-            background-color: #0A1F3F;
-            color: #FFF;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* body::before {
-            content: "";
-            position: absolute;
-            width: 120vw;
-            height: 120vw;
-            background-color: #3A0851;
-            border-radius: 50%;
-            top: 12vw;
-            left: -50vw;
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: linear-gradient(135deg, #0c0c1d 0%, #1a1a3e 25%, #2d1b69 50%, #0f0f23 75%, #000000 100%);
+            min-height: 100vh;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animation des étoiles en arrière-plan */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #ffffff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #ffffff, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: twinkle 3s infinite;
             z-index: -1;
-        } */
+            opacity: 0.7;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.7;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Particules flottantes */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(45deg, #00ff88, #0088ff);
+            border-radius: 50%;
+            animation: float 6s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
 
         #header {
-            background-color: rgba(0, 0, 0, 0.4);
-            padding: 0.1%;
-            border-top-right-radius: 2vw;
-            border-bottom-left-radius: 2vw;
-            padding-left: 2%;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 136, 255, 0.1) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 20px;
+            margin: 20px;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow:
+                0 8px 32px rgba(0, 255, 136, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 136, 0.05), transparent);
+            animation: scan 4s infinite;
+        }
+
+        @keyframes scan {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
         }
 
         h1 {
-            font-size: 2.2vw;
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            background: linear-gradient(45deg, #00ff88, #0088ff, #ff0088);
+            background-size: 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 3s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+            position: relative;
+            z-index: 1;
+            margin: 0;
+        }
+
+        .header-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 136, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 136, 0.4);
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff88;
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+        }
+
+        .mission-counter {
+            background: rgba(0, 136, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 136, 255, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @keyframes gradient {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
         }
 
         #main_body {
-            background-color: rgba(0, 0, 0, 0.4);
-            height: auto;
-            margin-top: 1%;
-            border-top-left-radius: 2vw;
-            border-bottom-right-radius: 2vw;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+            margin: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 255, 136, 0.05) 100%);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            overflow: hidden;
         }
 
         .main_body_header {
-            background-color: rgba(0, 0, 0, 0.3);
+            background: linear-gradient(90deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 136, 255, 0.1) 100%);
+            padding: 25px;
             display: flex;
             align-items: center;
-            padding: 0.8vw;
-            gap: 2vw;
-            padding-left: 2vw;
-            border-top-left-radius: 2vw;
-            border-bottom-right-radius: 2vw;
+            gap: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .main_body_header button {
-            padding: 10px 20px;
+            padding: 15px 30px;
             font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            background-color: rgba(0, 0, 0, 0.3);
-            border: 1px solid #333;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 136, 255, 0.2) 100%);
+            border: 2px solid transparent;
+            background-clip: padding-box;
             color: white;
-            border-radius: 5px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .main_body_header button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .main_body_header button:hover::before {
+            left: 100%;
         }
 
         .main_body_header button:hover {
-            background-color: #333;
+            border-color: rgba(0, 255, 136, 0.6);
+            box-shadow:
+                0 0 20px rgba(0, 255, 136, 0.4),
+                inset 0 0 20px rgba(0, 255, 136, 0.1);
+            transform: translateY(-2px);
+        }
+
+        #result {
+            padding: 20px 25px;
+            font-size: 18px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .launch_list {
+            display: flex;
+            align-items: center;
+            padding: 0 25px 25px;
         }
 
         ul {
             list-style-type: none;
             padding: 0;
             display: flex;
-            white-space: nowrap;
-            width: 100%;
-            margin-bottom: 20px;
-            overflow: hidden;
+            gap: 20px;
+            overflow-x: auto;
             scroll-behavior: smooth;
-            gap: 3vw;
-            margin-left: 1vw;
-            margin-right: 1vw;
+            flex: 1;
+            margin: 0 20px;
+            padding-bottom: 20px;
+        }
+
+        ul::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        ul::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ul::-webkit-scrollbar-thumb {
+            background: linear-gradient(90deg, #00ff88, #0088ff);
+            border-radius: 10px;
         }
 
         li {
-            padding: 8px 20px;
-            margin-right: 10px;
-            background-color: rgba(0, 0, 0, 0.4);
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            height: 15vw;
-            width: 10vw; /* Largeur définie */
-            text-wrap: wrap;
-            font-size: 0.7vw;
-            flex-shrink: 0; /* Empêche la boîte de se réduire */
-            border-top-left-radius: 2vw;
-            border-bottom-right-radius: 2vw;
-        }
-
-
-        li:hover {
-            background-color: #222;
-        }
-
-        .scroll-buttons {
+            min-width: 300px;
+            height: 360px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(0, 255, 136, 0.08) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 25px;
             display: flex;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
-
-        .scroll-buttons button {
-            font-size: 20px;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 1vw;
-            cursor: pointer;
-            border: 1px solid rgba(0, 0, 0, 0.5); /* Bordure verte */
-
-        }
-
-        .scroll-buttons button:hover {
-            background-color: #222;
-        }
-
-
-        .launch_list {
-            display: flex;
-        }
-
-        .agencies_list {
-            display: flex;
+            flex-direction: column;
             justify-content: space-between;
-            margin: 2vw;
-        }
-        .agencies_list2 {
-            display: flex;
-            justify-content: space-between;
-            margin: 2vw;
-        }
-        .view_more {
-            display: flex;
-            justify-content: space-between;
-            margin: 2vw;
-            justify-content: center;
-            padding-bottom: 1vw;
-        }
-
-        .agency_box {
-            margin-right: 10px;
-            background-color: rgba(0, 0, 0, 0.4);
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            height: 5vw;
-            width: 8vw; 
-            text-wrap: wrap;
-            font-size: 0.7vw;
-            flex-shrink: 0; 
-            border-top-left-radius: 2vw;
-            border-bottom-right-radius: 2vw;
+            transition: all 0.3s ease;
+            position: relative;
             overflow: hidden;
         }
 
-        .agency_box:hover {
-            background-color: rgba(0, 0, 0, 0.6);
+        li::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00ff88, #0088ff, #ff0088);
+            background-size: 300%;
+            animation: gradient 3s ease-in-out infinite;
+        }
+
+        li:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(0, 255, 136, 0.4);
+            box-shadow:
+                0 20px 40px rgba(0, 255, 136, 0.2),
+                0 0 30px rgba(0, 255, 136, 0.1);
+        }
+
+        .company-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .company-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+        }
+
+        .company-name {
+            font-weight: 600;
+            font-size: 18px;
+            color: #00ff88;
+        }
+
+        .launch-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .info-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px;
+            border-radius: 10px;
+            border-left: 3px solid #0088ff;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 500;
+            color: white;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        .default-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00ff88, #0088ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+        }
+
+        .launch-status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 255, 136, 0.3);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .scroll-buttons button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 136, 255, 0.2) 100%);
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scroll-buttons button:hover {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.4) 0%, rgba(0, 136, 255, 0.4) 100%);
+            border-color: rgba(0, 255, 136, 0.6);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+            transform: scale(1.1);
         }
 
         .separator {
-            height: 2px; 
-            background-color: #ddd;
-            margin: 2vw; 
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ff88, #0088ff, #ff0088, transparent);
+            margin: 30px 25px;
+            border-radius: 2px;
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        a {
-            text-decoration: none;
-            color: white;
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .agencies_list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            margin: 25px;
+        }
+
+        .agency_box {
+            height: 120px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(0, 255, 136, 0.08) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .agency_box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0, 255, 136, 0.1), rgba(0, 136, 255, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .agency_box:hover::before {
+            opacity: 1;
+        }
+
+        .agency_box:hover {
+            transform: translateY(-5px) scale(1.05);
+            border-color: rgba(0, 255, 136, 0.4);
+            box-shadow:
+                0 15px 30px rgba(0, 255, 136, 0.2),
+                0 0 20px rgba(0, 255, 136, 0.1);
         }
 
         .agency_logo {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* L’image remplit la box mais peut être coupée */
+            object-fit: cover;
+            transition: transform 0.3s ease;
         }
 
+        .agency_box:hover .agency_logo {
+            transform: scale(1.1);
+        }
+
+        .view_more {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .view_more a {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 136, 255, 0.2) 100%);
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .view_more a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .view_more a:hover::before {
+            left: 100%;
+        }
+
+        .view_more a:hover {
+            border-color: rgba(0, 255, 136, 0.6);
+            box-shadow:
+                0 0 25px rgba(0, 255, 136, 0.4),
+                inset 0 0 25px rgba(0, 255, 136, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .header-info {
+                align-items: center;
+                flex-direction: row;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            li {
+                min-width: 280px;
+                height: 340px;
+            }
+
+            .agencies_list {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+
+            .agency_box {
+                height: 100px;
+            }
+
+            .main_body_header {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
     </style>
 </head>
 
 <body>
+    <!-- Particules flottantes -->
+    <div class="particles" id="particles"></div>
+
     <div id="header">
-        <h1>Orbitwatch</h1>
+        <h1>ORBITWATCH</h1>
+        <div class="header-info">
+            <div class="live-indicator">
+                <div class="live-dot"></div>
+                <span>En direct</span>
+            </div>
+            <div class="mission-counter">
+                <span>🚀</span>
+                <span id="launch-count">Chargement...</span>
+            </div>
+        </div>
     </div>
+
     <div id="main_body">
         <div class="main_body_header">
-            <button id="executerBtn1">Server 1</button>
-            <button id="executerBtn2">Server 2</button>
+            <button id="executerBtn1">🛰️ Server 1</button>
+            <button id="executerBtn2">🚀 Server 2</button>
         </div>
+
         <p id="result"></p>
+
         <div class="launch_list">
-        <div class="scroll-buttons">
-            <button id="prevBtn" onclick="scrollList(-1)">&#60;</button>
+            <div class="scroll-buttons">
+                <button id="prevBtn" onclick="scrollList(-1)">‹</button>
+            </div>
+            <ul id="jsonResult"></ul>
+            <div class="scroll-buttons">
+                <button id="nextBtn" onclick="scrollList(+1)">›</button>
+            </div>
         </div>
-        <ul id="jsonResult"></ul>
-        <div class="scroll-buttons">
-            <button id="nextBtn" onclick="scrollList(+1)">&#62;</button>
-        </div>
-        </div>
+
         <div class="separator"></div>
+
         <div class="agencies_list">
             <a href="https://www.spacex.com" target="_blank">
                 <div class="agency_box">
@@ -254,26 +682,44 @@
                 </div>
             </a>
         </div>
+
         <div class="view_more">
-            <a href="../static/agencies.html">View all agencies</a>
+            <a href="../static/agencies.html">🌌 View all agencies</a>
         </div>
     </div>
+
     <script>
+        // Création des particules flottantes
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
         const companyImages = {
-                "SpaceX": "../static/spacex.svg",
-                "NASA": "../static/nasa.jpg",
-                "Arianespace": "../static/ariane.jpg",
-                "Blue Origin": "../static/blueorigin.jpg",
-                "CASC": "../static/casc.jpg",
-                "ISRO": "../static/isro.webp",
-                "Roscosmos": "../static/roscosmos.png",
-                "ULA": "../static/ula.jpeg",
-                "Rocket Lab": "../static/rocketlab.webp",
-                "Gilmour": "../static/gilmour.png",
-                "Orbital Science": "../static/orbital.png",
-                "Galactic Energy": "../static/galacticenergy.png",
-                "Firefly": "../static/firefly.webp"
-            };
+            "SpaceX": "../static/spacex.svg",
+            "NASA": "../static/nasa.jpg",
+            "Arianespace": "../static/ariane.jpg",
+            "Blue Origin": "../static/blueorigin.jpg",
+            "CASC": "../static/casc.jpg",
+            "ISRO": "../static/isro.webp",
+            "Roscosmos": "../static/roscosmos.png",
+            "ULA": "../static/ula.jpeg",
+            "Rocket Lab": "../static/rocketlab.webp",
+            "Gilmour": "../static/gilmour.png",
+            "Orbital Science": "../static/orbital.png",
+            "Galactic Energy": "../static/galacticenergy.png",
+            "Firefly": "../static/firefly.webp"
+        };
+
         let currentList = 'jsonResult';
 
         function scrollList(direction) {
@@ -288,27 +734,59 @@
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('result').innerText = data.message;
+                    document.getElementById('launch-count').innerText = `${data.launch_data.length} missions`;
+
                     const jsonResult = document.getElementById('jsonResult');
                     jsonResult.innerHTML = '';
-                    data.launch_data.forEach(item => {
+                    data.launch_data.forEach((item, index) => {
                         const li = document.createElement('li');
+                        const companyImage = companyImages[item.company];
 
-                        // Récupérer l'image correspondante à la compagnie
-                        const companyImage = companyImages[item.company] || "../static/default.jpg"; // Default si pas trouvé
+                        // Générer une icône par défaut basée sur le nom de la compagnie
+                        const defaultIcon = item.company ? item.company.charAt(0).toUpperCase() : '🚀';
+
+                        // Déterminer le statut du lancement
+                        const now = new Date();
+                        const launchDate = new Date(item.date + ' ' + (item.hour || '00:00'));
+                        let status = 'À venir';
+                        let statusColor = 'rgba(0,255,136,0.3)';
+
+                        if (launchDate < now) {
+                            status = 'Lancé';
+                            statusColor = 'rgba(255,136,0,0.3)';
+                        }
 
                         li.innerHTML = `
-                        <div style="display: inline-flex; align-items: center; gap: 0.5vw; margin-top: 0.3vw;">
-                            <img src="${companyImage}" alt="${item.company} logo" style="width: 3vw; height: 3vw; border-radius: 50%; object-fit: cover; vertical-align: middle;">
-                            <span>${item.company}</span>
-                        </div>
-                        <br><br>
-                        <strong>Name :</strong><br> ${item.name} <br><br>
-                        <strong>Date :</strong><br> ${item.date} <br><br>
-                        <strong>Hour :</strong><br> ${item.hour || 'N/A'}
-
+                            <div class="launch-status" style="background: ${statusColor};">${status}</div>
+                            <div class="company-header">
+                                ${companyImage ?
+                                `<img src="${companyImage}" alt="${item.company} logo" class="company-logo">` :
+                                `<div class="default-logo">${defaultIcon}</div>`
+                            }
+                                <div class="company-name">${item.company}</div>
+                            </div>
+                            <div class="launch-info">
+                                <div class="info-item">
+                                    <div class="info-label">Mission</div>
+                                    <div class="info-value">${item.name}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Date</div>
+                                    <div class="info-value">${item.date}</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Heure</div>
+                                    <div class="info-value">${item.hour || 'À déterminer'}</div>
+                                </div>
+                            </div>
                         `;
                         jsonResult.appendChild(li);
                     });
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                    document.getElementById('result').innerText = 'Erreur lors de la récupération des données';
+                    document.getElementById('launch-count').innerText = 'Erreur';
                 });
         }
 

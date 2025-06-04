@@ -4,139 +4,694 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
-    <title>Companies Grid</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <title>Orbitwatch - Space Companies</title>
     <style>
-        body {
-            font-family: 'Orbitron', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #0A1F3F;
-            color: #FFF;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* body::before {
-            content: "";
-            position: absolute;
-            width: 120vw;
-            height: 120vw;
-            background-color: #3A0851;
-            border-radius: 50%;
-            top: 12vw;
-            left: -50vw;
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: linear-gradient(135deg, #0c0c1d 0%, #1a1a3e 25%, #2d1b69 50%, #0f0f23 75%, #000000 100%);
+            min-height: 100vh;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animation des étoiles en arrière-plan */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #ffffff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #ffffff, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: twinkle 3s infinite;
             z-index: -1;
-        } */
+            opacity: 0.7;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.7;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Particules flottantes */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(45deg, #00ff88, #0088ff);
+            border-radius: 50%;
+            animation: float 6s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
 
         #header {
-            background-color: rgba(0, 0, 0, 0.4);
-            padding: 0.1%;
-            border-top-right-radius: 2vw;
-            border-bottom-left-radius: 2vw;
-            padding-left: 2%;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-            width: 80%;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 136, 255, 0.1) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 20px;
+            margin: 20px;
+            padding: 30px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow:
+                0 8px 32px rgba(0, 255, 136, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 136, 0.05), transparent);
+            animation: scan 4s infinite;
+        }
+
+        @keyframes scan {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
         }
 
         h1 {
-            font-size: 2.2vw;
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            background: linear-gradient(45deg, #00ff88, #0088ff, #ff0088);
+            background-size: 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 3s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes gradient {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .stat-item {
+            background: rgba(0, 136, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 136, 255, 0.4);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0088ff;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+        }
+
+        .controls-section {
+            margin: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 255, 136, 0.05) 100%);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .controls-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .controls-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #00ff88;
         }
 
         .filters {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        select,
+        input {
+            padding: 12px 18px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        select:focus,
+        input:focus {
+            outline: none;
+            border-color: rgba(0, 255, 136, 0.6);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+        }
+
+        .view-toggle {
+            display: flex;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 5px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .view-btn {
+            padding: 10px 20px;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .view-btn.active {
+            background: linear-gradient(135deg, #00ff88, #0088ff);
+            color: white;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+        }
+
+        .companies-container {
             margin: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(0, 255, 136, 0.03) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
         .grid {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            padding: 20px;
-            max-width: 1000px;
+            padding: 30px;
         }
 
         .country-section {
-            width: 100%;
+            margin-bottom: 40px;
         }
 
         .country-title {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-top: 20px;
-            text-align: left;
+            font-size: 24px;
+            font-weight: 700;
+            color: #00ff88;
+            margin-bottom: 25px;
+            padding: 15px 0;
+            border-bottom: 2px solid rgba(0, 255, 136, 0.3);
+            position: relative;
+        }
+
+        .country-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, #00ff88, #0088ff);
         }
 
         .company-list {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
         }
 
         .card {
-            background: #3A0851;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(0, 255, 136, 0.08) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 25px;
             text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00ff88, #0088ff, #ff0088);
+            background-size: 300%;
+            animation: gradient 3s ease-in-out infinite;
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-15px) scale(1.03);
+            border-color: rgba(0, 255, 136, 0.4);
+            box-shadow:
+                0 25px 50px rgba(0, 255, 136, 0.2),
+                0 0 30px rgba(0, 255, 136, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
         }
 
         .card img {
-            max-width: 100px;
-            height: auto;
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid rgba(0, 255, 136, 0.3);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+        }
+
+        .card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
             margin-bottom: 10px;
         }
 
-        .card a {
-            display: block;
-            margin-top: 10px;
-            color: #8e82ff;
-            text-decoration: none;
+        .card-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 12px;
         }
 
-        a {
-            text-decoration: none;
+        .country-badge {
+            background: rgba(0, 136, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 136, 255, 0.4);
+            font-size: 14px;
+            color: #0088ff;
+            font-weight: 500;
+        }
+
+        .card a {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 136, 255, 0.2) 100%);
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            border-radius: 25px;
             color: white;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-size: 12px;
+        }
+
+        .card a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .card a:hover::before {
+            left: 100%;
+        }
+
+        .card a:hover {
+            border-color: rgba(0, 255, 136, 0.6);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .list-view .company-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .list-view .card {
+            height: auto;
+            flex-direction: row;
+            text-align: left;
+            padding: 20px;
+        }
+
+        .list-view .card-header {
+            flex-direction: row;
+            width: auto;
+            margin-right: 20px;
+        }
+
+        .list-view .card img {
+            width: 60px;
+            height: 60px;
+        }
+
+        .search-highlight {
+            background: rgba(255, 255, 0, 0.3);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 18px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .header-stats {
+                flex-direction: row;
+                gap: 15px;
+            }
+
+            .filters {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .company-list {
+                grid-template-columns: 1fr;
+            }
+
+            .list-view .card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .list-view .card-header {
+                flex-direction: column;
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
         }
     </style>
 </head>
 
 <body>
+    <div class="particles" id="particles"></div>
+
     <div id="header">
-        <a href="https://orbitwatch.onrender.com"><h1>Orbitwatch</h1></a>
+        <div>
+            <a href="https://orbitwatch.onrender.com" style="text-decoration: none;">
+                <h1>Orbitwatch</h1>
+            </a>
+        </div>
+        <div class="header-stats">
+            <div class="stat-item">
+                <div class="stat-number" id="totalCompanies">0</div>
+                <div class="stat-label">Companies</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="totalCountries">0</div>
+                <div class="stat-label">Countries</div>
+            </div>
+        </div>
     </div>
-    <div class="filters">
-        <label for="sort">Sort by :</label>
-        <select id="sort">
-            <option value="name">Name (A-Z)</option>
-            <option value="country">Country</option>
-        </select>
+
+    <div class="controls-section">
+        <div class="controls-header">
+            <div class="controls-title">Space Industry Explorer</div>
+            <div class="view-toggle">
+                <button class="view-btn active" onclick="setView('grid', this)">Grid</button>
+                <button class="view-btn" onclick="setView('list', this)">List</button>
+            </div>
+        </div>
+        <div class="filters">
+            <div class="filter-group">
+                <label for="sort">Sort by:</label>
+                <select id="sort">
+                    <option value="name">Name (A-Z)</option>
+                    <option value="country">Country</option>
+                    <option value="nameDesc">Name (Z-A)</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="search">Search:</label>
+                <input type="text" id="search" placeholder="Company or country...">
+            </div>
+            <div class="filter-group">
+                <label for="countryFilter">Filter by country:</label>
+                <select id="countryFilter">
+                    <option value="">All countries</option>
+                </select>
+            </div>
+        </div>
     </div>
-    <div class="grid" id="companiesGrid"></div>
+
+    <div class="companies-container">
+        <div class="grid" id="companiesGrid"></div>
+    </div>
+
     <script>
         let companies = [];
+        let currentView = 'grid';
 
+        // Données de test - remplacer par votre fetch
+        const testData = [
+            { name: "SpaceX", country: "United States", logo: "https://via.placeholder.com/80", website: "https://spacex.com" },
+            { name: "Blue Origin", country: "United States", logo: "https://via.placeholder.com/80", website: "https://blueorigin.com" },
+            { name: "Arianespace", country: "France", logo: "https://via.placeholder.com/80", website: "https://arianespace.com" },
+            { name: "Roscosmos", country: "Russia", logo: "https://via.placeholder.com/80", website: "https://roscosmos.ru" },
+            { name: "CNSA", country: "China", logo: "https://via.placeholder.com/80", website: "#" },
+            { name: "ISRO", country: "India", logo: "https://via.placeholder.com/80", website: "https://isro.gov.in" }
+        ];
+
+        // Créer des particules flottantes
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (6 + Math.random() * 4) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Fetch des données ou utiliser les données de test
         fetch('agencies.json')
             .then(response => response.json())
             .then(data => {
                 companies = data;
-                renderCompanies();
+                initializePage();
             })
-            .catch(error => console.error('Erreur de chargement du JSON:', error));
+            .catch(error => {
+                console.log('Using test data');
+                companies = testData;
+                initializePage();
+            });
+
+        function initializePage() {
+            updateStats();
+            populateCountryFilter();
+            renderCompanies();
+            createParticles();
+        }
+
+        function updateStats() {
+            document.getElementById('totalCompanies').textContent = companies.length;
+            const countries = [...new Set(companies.map(c => c.country))];
+            document.getElementById('totalCountries').textContent = countries.length;
+        }
+
+        function populateCountryFilter() {
+            const countryFilter = document.getElementById('countryFilter');
+            const countries = [...new Set(companies.map(c => c.country))].sort();
+
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                countryFilter.appendChild(option);
+            });
+        }
+
+        function setView(view, element) {
+            currentView = view;
+            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+
+            const grid = document.getElementById('companiesGrid');
+            if (view === 'list') {
+                grid.classList.add('list-view');
+            } else {
+                grid.classList.remove('list-view');
+            }
+            renderCompanies();
+        }
+
+        function highlightSearchTerm(text, searchTerm) {
+            if (!searchTerm) return text;
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            return text.replace(regex, '<span class="search-highlight">$1</span>');
+        }
 
         function renderCompanies() {
             const grid = document.getElementById("companiesGrid");
             grid.innerHTML = "";
+
             const sortBy = document.getElementById("sort").value;
+            const searchTerm = document.getElementById("search").value.toLowerCase();
+            const countryFilter = document.getElementById("countryFilter").value;
 
-            if (sortBy === "country") {
-                companies.sort((a, b) => a.country.localeCompare(b.country));
+            let filteredCompanies = companies.filter(company => {
+                const matchesSearch = company.name.toLowerCase().includes(searchTerm) ||
+                    company.country.toLowerCase().includes(searchTerm);
+                const matchesCountry = !countryFilter || company.country === countryFilter;
+                return matchesSearch && matchesCountry;
+            });
+
+            if (filteredCompanies.length === 0) {
+                grid.innerHTML = '<div class="no-results">No companies found matching your criteria.</div>';
+                return;
+            }
+
+            // Tri
+            switch (sortBy) {
+                case 'country':
+                    filteredCompanies.sort((a, b) => a.country.localeCompare(b.country));
+                    break;
+                case 'nameDesc':
+                    filteredCompanies.sort((a, b) => b.name.localeCompare(a.name));
+                    break;
+                default:
+                    filteredCompanies.sort((a, b) => a.name.localeCompare(b.name));
+            }
+
+            if (sortBy === "country" && currentView === 'grid') {
                 let currentCountry = "";
-
-                companies.forEach(company => {
+                filteredCompanies.forEach(company => {
                     if (company.country !== currentCountry) {
                         currentCountry = company.country;
                         const countrySection = document.createElement("div");
@@ -148,37 +703,45 @@
                         grid.appendChild(countrySection);
                     }
 
-                    const card = document.createElement("div");
-                    card.className = "card";
-                    card.innerHTML = `
-                        <img src="${company.logo}" alt="${company.name} Logo">
-                        <h3>${company.name}</h3>
-                        <p>Country: ${company.country}</p>
-                        <a href="${company.website}" target="_blank">Visiter le site</a>
-                    `;
+                    const card = createCompanyCard(company, searchTerm);
                     grid.lastChild.lastChild.appendChild(card);
                 });
             } else {
-                companies.sort((a, b) => a.name.localeCompare(b.name));
                 const companyList = document.createElement("div");
                 companyList.className = "company-list";
                 grid.appendChild(companyList);
 
-                companies.forEach(company => {
-                    const card = document.createElement("div");
-                    card.className = "card";
-                    card.innerHTML = `
-                        <img src="${company.logo}" alt="${company.name} Logo">
-                        <h3>${company.name}</h3>
-                        <p>${company.country}</p>
-                        <a href="${company.website}" target="_blank">Visit</a>
-                    `;
+                filteredCompanies.forEach(company => {
+                    const card = createCompanyCard(company, searchTerm);
                     companyList.appendChild(card);
                 });
             }
         }
 
+        function createCompanyCard(company, searchTerm = '') {
+            const card = document.createElement("div");
+            card.className = "card";
+
+            const logoSrc = company.logo || 'https://via.placeholder.com/80/333/fff?text=' + company.name.charAt(0);
+
+            card.innerHTML = `
+                <div class="card-header">
+                    <img src="${logoSrc}" alt="${company.name} Logo" onerror="this.src='https://via.placeholder.com/80/333/fff?text=${company.name.charAt(0)}'">
+                    <h3>${highlightSearchTerm(company.name, searchTerm)}</h3>
+                </div>
+                <div class="card-info">
+                    <div class="country-badge">${highlightSearchTerm(company.country, searchTerm)}</div>
+                    <a href="${company.website}" target="_blank">Visit Website</a>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Event listeners
         document.getElementById("sort").addEventListener("change", renderCompanies);
+        document.getElementById("search").addEventListener("input", renderCompanies);
+        document.getElementById("countryFilter").addEventListener("change", renderCompanies);
     </script>
 </body>
 
